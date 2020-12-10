@@ -56,6 +56,8 @@ export default {
   },
   computed: {
     shortUrl() {
+        let shortUrl = this.url.split("://")[1];
+        if(shortUrl) shortUrl = shortUrl.split("/")[0];
       return this.url.split("://")[1].split("/")[0];
     },
   },
@@ -116,7 +118,6 @@ export default {
     padding: 0.3rem;
     bottom: 0.5rem;
     right: -5rem;
-    //
     transition: all ease-in-out 0.2s;
     &:hover {
       background: red;

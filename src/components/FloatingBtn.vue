@@ -35,6 +35,8 @@ export default {
   },
   methods: {
     btnClicked() {
+      this.$emit("notFirstTime");
+
       this.allLinks = localStorage.getItem("allLinks")
         ? JSON.parse(localStorage.getItem("allLinks"))
         : [];
@@ -42,18 +44,29 @@ export default {
       this.inputActive = true;
 
       if (this.inputValue) {
+        if (
+          !this.inputValue.includes("http://") &&
+          !this.inputValue.includes("https://")
+        ) {
+          const payload = {
+            message: "Invalid url format!",
+            type: "error",
+          };
+          this.$emit("showNotification", payload);
+          return;
+        }
         this.inputActive = false;
         this.addLink(this.inputValue);
         this.inputValue = "";
         inputClassList.remove("active");
       } else {
         this.inputActive = true;
-        if(!inputClassList.contains('emptyInput')){
-            inputClassList.add('emptyInput');
+        if (!inputClassList.contains("emptyInput")) {
+          inputClassList.add("emptyInput");
         }
-        setTimeout(()=>{
-            inputClassList.remove('emptyInput')
-        },300)
+        setTimeout(() => {
+          inputClassList.remove("emptyInput");
+        }, 300);
         return;
       }
       inputClassList.add("active");

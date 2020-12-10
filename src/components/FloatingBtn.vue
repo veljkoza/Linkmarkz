@@ -55,6 +55,15 @@ export default {
           this.$emit("showNotification", payload);
           return;
         }
+        const findUrl = this.allLinks.indexOf(this.inputValue);
+        if (findUrl !== -1) {
+          const payload = {
+            message: "Can't add same url twice!",
+            type: "error",
+          };
+          this.$emit("showNotification", payload);
+          return;
+        }
         this.inputActive = false;
         this.addLink(this.inputValue);
         this.inputValue = "";
